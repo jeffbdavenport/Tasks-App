@@ -25,8 +25,14 @@ const db = new Database();
 
 // Task Schema
 const taskSchema = new mongoose.Schema({
-  name: String,
-  content: String
+  name: {
+    type: String,
+    required: true
+  },
+  content: {
+    type: String,
+    required: true
+  }
 });
 
 const Task = mongoose.model('Task', taskSchema);
@@ -45,10 +51,7 @@ router.get('/tasks', function (req, res, next) {
 
 // GET Get an array of all the tasks
 router.get('/tasks/:id', function (req, res, next) {
-
-  console.log('Request Id:', req.params.id);
-  Task.findById(req.params.id, 'name content').exec().then(function (task) {
-    console.log(task);
+  Task.findById(req.params.id).exec().then(function (task) {
     res.json({ task: task });
   }).catch(function (error) {
     console.log(error);
@@ -59,11 +62,9 @@ router.get('/tasks/:id', function (req, res, next) {
 
 // POST Create a new task
 router.post('/tasks/create', function (req, res, next) {
-  Task.create({
-    name: req.params.name,
-    content: req.params.content
-  }).then(() => {
-    res.status(200).send({ success: "OK" });
+
+  Task.create(req.body).then(() => {
+    res.status(200).send({ success: req.body });
   }).catch((error) => {
     console.log(error);
     res.status(500).send({ error: error });
