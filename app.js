@@ -37,30 +37,8 @@ app.use(function (err, req, res, next) {
 });
 
 
-const mongoose = require("mongoose");
-
-const server = '127.0.0.1:27017';
-const database = 'TaskApp';
-
-class Database {
-  constructor() {
-    this._connect();
-  }
-  _connect() {
-    mongoose
-      .connect(`mongodb://${server}/${database}`)
-      .then(() => {
-        console.log('Database connection successful');
-      })
-      .catch((err) => {
-        console.error('Database connection failed');
-      });
-  }
-}
-
-const db = new Database();
-
-module.exports = {
-  app,
-  db
-};
+module.exports = app;
+// module.exports = {
+//   app,
+//   db
+// };
