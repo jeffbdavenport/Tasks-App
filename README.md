@@ -14,13 +14,21 @@ https://www.mongodb.com/docs/manual/administration/install-community/
 Enable on Ubuntu
 `sudo systemctl enable mongod`
 
+Start App:
+`$ DEBUG=tasks-app:* npm start`
 
 Testing:
 
-`curl localhost:3000/tasks/create -d '{"name": "New Task", "content": "This is the description"}'`
+`$ curl -H "Content-Type: application/json" localhost:3000/tasks/create -d '{"name":"New Task", "content":"This is the description"}'`
 
-`curl localhost:3000/tasks`
+`{"success":{"name":"New Task","content":"This is the description"}}`
 
-`{"tasks":[{"_id":"656fd10624b9c9714f487495","__v":0}]}`
 
-`curl localhost:3000/tasks/656fd10624b9c9714f487495`
+`$ curl localhost:3000/tasks`
+
+`{"tasks":[{"_id":"656fd6e499c20f9658bdda3e","name":"New Task","content":"This is the description","__v":0}]}`
+
+
+`curl localhost:3000/tasks/656fd6e499c20f9658bdda3e`
+
+`{"task":{"_id":"656fd6e499c20f9658bdda3e","name":"New Task","content":"This is the description","__v":0}}`
